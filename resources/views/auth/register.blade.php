@@ -1,3 +1,5 @@
+@extends('layout')
+@section('content')
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -9,6 +11,7 @@
 </head>
 
 <body>
+
   <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -69,3 +72,4 @@
 </body>
 
 </html>
+@endsection

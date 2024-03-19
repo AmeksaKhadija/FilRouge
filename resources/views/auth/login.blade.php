@@ -1,3 +1,5 @@
+@extends('layout')
+@section('content')
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -61,3 +63,4 @@
 </body>
 
 </html>
+@endsection
