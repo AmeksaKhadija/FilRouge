@@ -12,7 +12,7 @@
 
             <div class="d-flex w-100 justify-content-center">
                 <button type="submit" class="btn btn-success btn-block mb-4 me-4 save">Save Edit</button>
-                <a href="/">
+                <a href="">
                     <div class="btn btn-danger btn-block mb-4 annuler">Annuler</div>
                 </a>
             </div>

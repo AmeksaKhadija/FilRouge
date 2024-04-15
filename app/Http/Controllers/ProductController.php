@@ -10,7 +10,14 @@ use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
-    //
+
+    // daashboard d'admin
+    public function afficher()
+    {
+        return view('dashboardAdmin');
+    }
+
+    // l'affichage des produits
     public function list_products(){
         $produits = DB::table('products')
             ->join('categories', 'products.id_categorie', '=', 'categories.id')
@@ -21,9 +28,8 @@ class ProductController extends Controller
 
         return view('product.product', ['produits' => $produits, 'categories' => $categories]);
     }
-
-
-    public function add_product(Request $request)
+    // lm'ajout des produits
+    public function addProduct(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -52,7 +58,7 @@ class ProductController extends Controller
         return redirect('/products');
     }
 
-
+    // edit et update des produits
     public function edit_product($id){
         $product = Product::find($id);
         $categories= Category::all();
@@ -87,6 +93,7 @@ class ProductController extends Controller
         return redirect('/products');
     }
 
+    // supprission des produits
         public function delete_product($id){
         $produit = Product::find($id);
         $produit->delete();

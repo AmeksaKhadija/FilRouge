@@ -2,10 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ClientControlller;
-use App\Http\Controllers\PermessionsController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,45 +19,33 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/categories', [CategoryController::class, 'list_categories'])->name('categories');
+// authentification
+Route::get('/register', [AuthController::class, 'register']);
+Route::post('/registerpost', [AuthController::class, 'registerPost']);
+Route::get('/login', [AuthController::class, 'login']);
+
+// crud des produits
 Route::get('/products', [ProductController::class, 'list_products'])->name('products');
-Route::get('/roles', [RoleController::class, 'show_roles'])->name('roles');
-Route::post('/addRole', [RoleController::class, 'add_roles'])->name('addRole');
-Route::get('/deleteRole/{id}', [RoleController::class, 'deleteRole'])->name('deleteRole{id}');
-Route::get('/editRole/{id}', [RoleController::class, 'editRole'])->name('editRole{id}');
-Route::post('/updaterole', [RoleController::class, 'update_role'])->name('updaterole');
-
-
-
-
-
-
-
-// affichage des ur=tilisateurs et rendrent ils des admins
-Route::get('/users', [UserController::class, 'show_users'])->name('users');
-Route::post('/users/{user}/make-admin', 'UserController@makeAdmin')->name('users.make-admin');
+Route::get('/editproduct/{id}', [ProductController::class, 'edit_product'])->name('editproduct/{id}');
+Route::post('/updateproducts', [ProductController::class, 'update_product'])->name('updateproducts');
+Route::post('/addproducts', [ProductController::class, 'addProduct'])->name('addproducts');
+Route::get('/deleteproduct/{id}', [ProductController::class, 'delete_product'])->name('deleteproduct/{id}');
 
 // crud des categories
+Route::get('/categories', [CategoryController::class, 'list_categories'])->name('categories');
 Route::get('/addcategory', [CategoryController::class, 'create_category'])->name('addcategory');
 Route::post('/updateCategory', [CategoryController::class, 'update_category'])->name('updateCategory');
 Route::delete('/deletecategory/{id}', [CategoryController::class, 'delete_category'])->name('deletecategory/{id}');
 Route::get('/editcategory/{id}', [CategoryController::class, 'edit_category'])->name('editcategory/{id}');
 
+// affichage des utilisateurs et rendrent ils des admins
+Route::get('/users', [UserController::class, 'show_users'])->name('users');
+Route::post('/users/{user}/make-admin', 'UserController@makeAdmin')->name('users.make-admin');
+
 // index __ allproduct
 Route::get('/allproducts', [ProductController::class, 'allproducts']);
 // details d'un produit
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-
-// crud des produits
-Route::get('/editproduct/{id}', [ProductController::class, 'edit_product'])->name('editproduct/{id}');
-Route::post('/updateproducts', [ProductController::class, 'update_product'])->name('updateproducts');
-Route::post('/addproducts', [ProductController::class, 'add_product'])->name('addproducts');
-Route::get('/deleteproduct/{id}', [ProductController::class, 'delete_product'])->name('deleteproduct/{id}');
-
-// authentification
-Route::get('/register', [AuthController::class, 'register']);
-Route::post('/registerpost', [AuthController::class, 'registerPost']);
-Route::get('/login', [AuthController::class, 'login']);
 
 // others
 Route::get('/resetwithemail/{token}', [AuthController::class, 'reset'])->name('resetwithemail');
@@ -70,6 +55,8 @@ Route::get('/search', [ProductController::class, 'search']);
 Route::get('/filter', [ProductController::class, 'filter']);
 
 
+
+Route::get('/dashboardAdmin',[ProductController::class,'afficher']);
 
 
 

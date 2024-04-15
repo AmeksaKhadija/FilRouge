@@ -10,6 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="assets/images/fav.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-4s3t2dMuNvjQACSFy7TXdCrzlUUF7fN/kHRUFL0SYV+ur2BiDcMS3I07fjFOBI+H" crossorigin="anonymous">
 
 
     <style>
@@ -46,7 +47,7 @@
 <body>
     <header class="navbar navbar-expand-lg navbar-white bg-white shadow sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#" style="color: #0c0c0c;"><span style="color: #2e42f1;"
+            <a class="navbar-brand" href="#" style="color: #0c0c0c;"><span style="color: #5f3505;"
                     class="nav-brand-two">You</span>Choix</a>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Rechercher..." aria-label="Search">
