@@ -29,43 +29,40 @@ Route::post('/addRole', [RoleController::class, 'add_roles'])->name('addRole');
 Route::get('/deleteRole/{id}', [RoleController::class, 'deleteRole'])->name('deleteRole{id}');
 Route::get('/editRole/{id}', [RoleController::class, 'editRole'])->name('editRole{id}');
 Route::post('/updaterole', [RoleController::class, 'update_role'])->name('updaterole');
-////////////
-// Route::get('/permessions', [PermessionsController::class, 'show_permessions'])->name('permessions');
-// Route::post('/addPermession', [PermessionsController::class, 'addPermessions'])->name('addPermession');
-// Route::get('/deletePermession/{id}', [PermessionsController::class, 'deletePermessions'])->name('deletePermession');
-// Route::get('/editPermession/{id}', [PermessionsController::class, 'editPermessions'])->name('editPermession');
-// Route::post('/updatePermession', [PermessionsController::class, 'updatePermessions'])->name('updatePermession');
-///////
-// Route::middleware(['check-permission:gestionnaireClient'])->get('/clients', [ClientControlller::class, 'list_clients']);;
 
 
+
+
+
+
+
+// affichage des ur=tilisateurs et rendrent ils des admins
 Route::get('/users', [UserController::class, 'show_users'])->name('users');
-Route::post('/addUser', [UserController::class, 'addUsers'])->name('addUser');
-Route::get('/deleteUser/{id}', [UserController::class, 'deleteUsers'])->name('deleteUser/{id}');
-Route::get('/editUser/{id}', [UserController::class, 'editUsers'])->name('editUser/{id}');
-Route::post('/updateUser', [UserController::class, 'updateUsers'])->name('updateUser');
+Route::post('/users/{user}/make-admin', 'UserController@makeAdmin')->name('users.make-admin');
 
-Route::post('/addcategory', [CategoryController::class, 'create_category'])->name('addcategory');
+// crud des categories
+Route::get('/addcategory', [CategoryController::class, 'create_category'])->name('addcategory');
 Route::post('/updateCategory', [CategoryController::class, 'update_category'])->name('updateCategory');
 Route::delete('/deletecategory/{id}', [CategoryController::class, 'delete_category'])->name('deletecategory/{id}');
 Route::get('/editcategory/{id}', [CategoryController::class, 'edit_category'])->name('editcategory/{id}');
+
+// index __ allproduct
+Route::get('/allproducts', [ProductController::class, 'allproducts']);
+// details d'un produit
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+// crud des produits
 Route::get('/editproduct/{id}', [ProductController::class, 'edit_product'])->name('editproduct/{id}');
 Route::post('/updateproducts', [ProductController::class, 'update_product'])->name('updateproducts');
 Route::post('/addproducts', [ProductController::class, 'add_product'])->name('addproducts');
 Route::get('/deleteproduct/{id}', [ProductController::class, 'delete_product'])->name('deleteproduct/{id}');
-Route::get('/clients', [ClientControlller::class, 'list_clients'])->name('clients');;
-Route::post('/addclients', [ClientControlller::class, 'add_client'])->name('addclients');
-Route::get('/deleteclient/{id}', [ClientControlller::class, 'delete_client'])->name('deleteclient/{id}');
-Route::get('/editclient/{id}', [ClientControlller::class, 'edit_client'])->name('editclient/{id}');
-Route::post('/updateclients/{id}', [ClientControlller::class, 'update_client'])->name('updateclients/{id}');
-Route::get('/allproducts', [ProductController::class, 'allproducts']);
+
+// authentification
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/registerpost', [AuthController::class, 'registerPost']);
 Route::get('/login', [AuthController::class, 'login']);
-Route::get('/forgetpassword', [AuthController::class, 'forgetpassword']);
-Route::post('/resetpasswordPost', [AuthController::class, 'sendemail']);
-Route::post('/newpasswordPost', [AuthController::class, 'addpassword']);
 
+// others
 Route::get('/resetwithemail/{token}', [AuthController::class, 'reset'])->name('resetwithemail');
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/loginpost', [AuthController::class, 'loginpost'])->name('loginpost');
