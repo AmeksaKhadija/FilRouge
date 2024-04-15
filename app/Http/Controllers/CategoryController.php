@@ -14,6 +14,7 @@ class CategoryController extends Controller
         $categories =Category::latest()->simplePaginate(2);
         return view('category.category', compact('categories'));
     }
+    
     public function create_category(Request $request)
     {
         $request->validate([
