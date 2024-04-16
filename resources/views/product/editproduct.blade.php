@@ -121,7 +121,7 @@
                         </div>
                         <div class="form-group">
                             <img src="/img/{{ $product->image_path }}" width="300px">
-                            <input type="file" class="form-control" name="image_path" accept="image/*">
+                            <input type="file" class="form-control" name="image_path" accept="image/*" style="height:20rem with:20rem">
                             </label>
                         </div>
                     </div>

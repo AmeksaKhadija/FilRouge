@@ -170,7 +170,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="ms-3">
-                                            <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}" style="max-width: 100px; max-height: 100px;">
+                                            <img src="{{ asset($product->image_path) }}" alt="..." style="max-width: 100px; max-height: 100px;">
                                         </div>
                                     </div>
                                 </td>
@@ -236,7 +236,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Image </label>
-                                        <input type="file" class="form-control" name="image_path" accept="image/*">
+                                        <input type="file" class="form-control" name="image_path" accept="image/*" style="height:20rem with:20rem>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
