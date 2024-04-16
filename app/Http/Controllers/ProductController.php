@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\View;
 class ProductController extends Controller
 {
 
-    // daashboard d'admin
-    public function afficher()
-    {
-        return view('dashboardAdmin');
-    }
 
     // l'affichage des produits
     public function list_products(){

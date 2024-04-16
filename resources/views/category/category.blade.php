@@ -98,6 +98,7 @@
                         <thead class="bg-light">
                             <tr>
                                 <th>Name</th>
+                                <th>image_path</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -113,16 +114,21 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="ms-3">
+                                                <img src="{{ asset($category->image_path) }}" alt="..." style="max-width: 100px; max-height: 100px;">
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td style="display: flex; gap:10px">
                                         <form action="/deletecategory/{{ $category->id }}" method="post">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                         </form>
-
                                         <a href="/editcategory/{{ $category->id }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                                     </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
@@ -136,7 +142,7 @@
                     <div id="addEmployeeModal" class="modal">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form id="employeeForm" method="post" action="/addcategory">
+                                <form id="employeeForm" method="post" action="/addcategory" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-header">
                                         <h4 class="modal-title">Add Category</h4>
@@ -148,7 +154,10 @@
                                             <label>Name</label>
                                             <input type="text" class="form-control" name="name">
                                         </div>
-
+                                        <div class="form-group">
+                                            <label>Image </label>
+                                            <input type="file" class="form-control" name="image_path" accept="image/*">
+                                        </div>
                                         <div class="modal-footer">
                                             <input type="button" class="btn btn-default" data-dismiss="modal"
                                                 value="Cancel">
@@ -158,7 +167,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 @endsection
 
         </div>
