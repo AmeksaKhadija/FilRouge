@@ -47,8 +47,7 @@ class UserController extends Controller
             $cartItem = new Cart();
             $cartItem->user_id = auth()->id();
             $cartItem->product_id = $productId;
-            $cartItem->image_path= $request->image_path;
-
+            $cartItem->image_path = $request->image_path;
             $cartItem->save();
 
         session()->flash('success', 'le produit à été ajouter avec success');
@@ -57,6 +56,14 @@ class UserController extends Controller
             return redirect()->route('login')->with('error', 'Vous devez être connecté pour ajouter des produits au panier.');
         }
     }
+
+    public function save(Request $request){
+        $product = Cart::where('product_id', $request->idProduct)->first();
+        $product->quantity= $request->qte;
+        $product->save();
+        return  redirect()->back();
+    }
+
 
 
 }
