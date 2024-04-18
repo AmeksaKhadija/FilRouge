@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 // authentification
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/registerpost', [AuthController::class, 'registerPost']);
-Route::get('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 
 // crud des produits
 Route::get('/products', [ProductController::class, 'list_products'])->name('products');
@@ -33,7 +33,7 @@ Route::get('/deleteproduct/{id}', [ProductController::class, 'delete_product'])-
 
 // crud des categories
 Route::get('/categories', [CategoryController::class, 'list_categories'])->name('categories');
-Route::post('/addcategory', [CategoryController::class, 'create_category'])->name('addcategory');
+Route::get('/addcategory', [CategoryController::class, 'create_category'])->name('addcategory');
 Route::post('/updateCategory', [CategoryController::class, 'update_category'])->name('updateCategory');
 Route::delete('/deletecategory/{id}', [CategoryController::class, 'delete_category'])->name('deletecategory/{id}');
 Route::get('/editcategory/{id}', [CategoryController::class, 'edit_category'])->name('editcategory/{id}');
@@ -56,9 +56,7 @@ Route::get('/filter', [ProductController::class, 'filter']);
 
 
 
+// l'ajout du produit au panier
+Route::post('/add-to-cart', [UserController::class, 'addToCart'])->name('addToCart')->middleware('auth');
 
-
-
-
-
-
+Route::get('/MonPanier',[UserController::class,'showCart'])->name('mon_panier');

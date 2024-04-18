@@ -11,7 +11,6 @@
             width: 300px;
             overflow: hidden;
         }
-
     </style>
     <div class="row justify-content-center mt-5">
         <div class="col-md-8">
@@ -20,7 +19,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="image col-md-4">
-                            <img src="{{ asset('img/' . $product->image_path) }}" alt="Product Image" class="img-fluid" style="height: 100%; width: 100%;">
+                            <img src="{{ asset('img/' . $product->image_path) }}" alt="Product Image" class="img-fluid"
+                                style="height: 100%; width: 100%;">
                         </div>
                         <div class="col-md-8">
                             <h5 class="custom-h5-color">Description:</h5>
@@ -32,7 +32,18 @@
                             <h5 class="custom-h5-color">Tags:</h5>
                             <p>{{ $product->tags }}</p>
                             <a href="/allproducts" class="btn btn-success mt-5">Go Back</a>
-                            <button class="btn btn-outline-secondary float-right mt-5">Ajouter au panier</button>
+                            <form action="{{ route('addToCart') }}" method="POST" style="display: inline;" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" value="{{$product->image_path }}" name="image_path">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="btn btn-outline-secondary float-right mt-5">Ajouter au
+                                    panier</button>
+                            </form>
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
