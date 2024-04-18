@@ -128,13 +128,14 @@
 
 
     <div class="container d-flex flex-row grid gap-3 mb-5 w-100">
-        @foreach($categories as $category)
-        <div>
-            <a href="#">
-                <img src="{{ asset('img/' . $category->image_path) }}" class="d-block w-100 rounded-2 mb-3" style="height:30rem" alt="...">
-                <p class="text-center fw-bold">{{ $category->name }}</p>
-            </a>
-        </div>
+        @foreach ($categories as $category)
+            <div>
+                <a href="#">
+                    <img src="{{ asset('img/' . $category->image_path) }}" class="d-block w-100 rounded-2 mb-3"
+                        style="height:30rem" alt="...">
+                    <p class="text-center fw-bold">{{ $category->name }}</p>
+                </a>
+            </div>
         @endforeach
     </div>
 
@@ -147,13 +148,15 @@
                 <div class="col-md-4 mb-4">
                     <div class="card" style="height:20rem">
                         <div class="image">
-                            <img src="{{ asset('img/' . $product->image_path) }}" class="d-block w-100 rounded-2" alt="{{ $product->name }}">
+                            <img src="{{ asset('img/' . $product->image_path) }}" class="d-block w-100 rounded-2"
+                                alt="{{ $product->name }}">
                         </div>
                         <div class="details">
                             <div class="center">
                                 <h1>{{ $product->name }}</h1><br>
-                                <h6>Categorie:</h6><p><span>{{ $product->category->name }}</span></p><br>
-                                    <a href="{{ route('product.show', $product->id) }}" class="btn btn-primary">View Details</a>
+                                <h6>Categorie:</h6>
+                                <p><span>{{ $product->category->name }}</span></p><br>
+                                <a href="{{ route('product.show', $product->id) }}" class="btn btn-primary">View Details</a>
                                 </ul>
                             </div>
                         </div>
@@ -164,17 +167,18 @@
     </div>
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-4 d-flex align-items-center">
-          <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-          </a>
-          <span class="mb-3 mb-md-0 text-muted">© 2024 Company, Inc</span>
+            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                <svg class="bi" width="30" height="24">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+            <span class="mb-3 mb-md-0 text-muted">© 2024 Company, Inc</span>
         </div>
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-          <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-instagram"></i></a></li>
-          <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-          <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-instagram"></i></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-facebook"></i></a></li>
         </ul>
-      </footer>
-
+    </footer>
 @endsection
