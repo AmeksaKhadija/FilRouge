@@ -60,3 +60,4 @@ Route::get('/filter', [ProductController::class, 'filter']);
 Route::post('/add-to-cart', [UserController::class, 'addToCart'])->name('addToCart')->middleware('auth');
 
 Route::get('/MonPanier',[UserController::class,'showCart'])->name('mon_panier');
+Route::put('/panierer',[UserController::class,'save'])->name('save.qte');
