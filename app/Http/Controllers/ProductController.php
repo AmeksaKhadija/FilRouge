@@ -89,7 +89,8 @@ class ProductController extends Controller
     }
 
     // supprission des produits
-        public function delete_product($id){
+        public function delete_product($id)
+    {
         $produit = Product::find($id);
         $produit->delete();
         return redirect('/products');

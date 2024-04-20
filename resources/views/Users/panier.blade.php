@@ -7,6 +7,28 @@
             width: 300px;
             overflow: hidden;
         }
+
+        .total-card {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #F9F1E7;
+        padding: 20px;
+        border-top: 1px solid #fff;
+        box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .total-card h4 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .total-card p {
+        margin: 0;
+        font-size: 18px;
+        color: #666;
+    }
     </style>
     <div class="container mt-5">
 
@@ -17,7 +39,7 @@
                 </div>
                 <div class="col-md-8">
                     <h5 class="custom-h5-color">Prix:</h5>
-                    <p>${{ $product->prix }}</p>
+                    <p>${{ $product->price }}</p>
                     <h5 class="custom-h5-color">Quantité:</h5>
                     <p>
                         <button class="btn btn-sm btn-secondary" onclick="decrementQuantity({{ $product->id }})">-</button>
@@ -32,12 +54,11 @@
                             <input type="hidden" value="{{ $product->product_id }}" name="idProduct">
 
                             <button type="submit" class="btn btn-sm btn-warning">save</button>
-
                         </form>
-                        <form action="" method="POST">
+                        <form action="/retirerProduct/{{ $product->id }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </div>
                     @if ($message = Session::get('success'))
@@ -49,6 +70,14 @@
             </div>
         @endforeach
     </div>
+
+    <!-- Section pour afficher le prix total -->
+    <div class="total-card">
+        <h4>Total:</h4>
+        <p id="totalPrice"></p>
+        <button class="buy">Buy now</button>
+    </div>
+
     <script>
         function incrementQuantity(productId) {
             let quantityElement = document.getElementById('quantity_' + productId);
@@ -69,3 +98,40 @@
         }
     </script>
 @endsection
+
+
+
+    {{-- <script>
+        function incrementQuantity(productId) {
+            let quantityElement = document.getElementById('quantity_' + productId);
+            let qteInput = document.getElementById('qte' + productId);
+            let currentQuantity = parseInt(quantityElement.textContent);
+            quantityElement.textContent = currentQuantity + 1;
+            qteInput.value = currentQuantity + 1;
+            updateTotalPrice(); // Mettre à jour le prix total après chaque changement de quantité
+        }
+
+        function decrementQuantity(productId) {
+            let quantityElement = document.getElementById('quantity_' + productId);
+            let qteInput = document.getElementById('qte' + productId);
+            let currentQuantity = parseInt(quantityElement.textContent);
+            if (currentQuantity > 1) {
+                quantityElement.textContent = currentQuantity - 1;
+                qteInput.value = currentQuantity - 1;
+                updateTotalPrice(); // Mettre à jour le prix total après chaque changement de quantité
+            }
+        }
+
+        // Fonction pour mettre à jour le prix total en fonction des quantités actuelles des produits
+        function updateTotalPrice() {
+            let totalPrice = 0;
+            @foreach ($products as $product)
+                let quantity = parseInt(document.getElementById('quantity_{{ $product->id }}').textContent);
+                totalPrice += quantity * {{ $product->price }};
+            @endforeach
+            document.getElementById('totalPrice').textContent = '$' + totalPrice.toFixed(2);
+        }
+
+        // Appel initial pour afficher le prix total au chargement de la page
+        updateTotalPrice();
+    </script> --}}
