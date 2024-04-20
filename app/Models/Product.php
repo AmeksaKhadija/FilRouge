@@ -13,4 +13,11 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'id_categorie');
     }
+
+    public function cart()
+    {
+        return $this->belongsToMany(Cart::class, '');
+
+    }
+
 }
