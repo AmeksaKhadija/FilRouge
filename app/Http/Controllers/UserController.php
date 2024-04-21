@@ -32,11 +32,23 @@ class UserController extends Controller
     }
 
 
-        public function showCart()
+        public function showCart(Request $request)
     {
-        // $user = Auth::user()->name;
-        $products = Cart::where('user_id', auth()->id())->get();
-        return view('Users.panier', compact('products'));
+        $userId = Auth::user()->id;
+
+        $items = DB::table('products')
+                ->join('cart', 'cart.product_id', '=', 'products.id')
+                ->where('cart.user_id', $userId)
+                ->get();
+                // dd($items);
+        $totalItem = DB::table('cart')
+                ->join('products', 'cart.product_id', '=', 'products.id')
+                ->where('cart.user_id', $userId)
+                ->selectRaw('products.prix * cart.quantity as total_item, products.prix, cart.quantity')
+                ->get();
+        $totalGlobal = $totalItem->sum('total_item');
+
+        return view('Users.panier', compact('items','totalGlobal'));
     }
 
         public function addToCart(Request $request)
@@ -44,21 +56,15 @@ class UserController extends Controller
         if (auth()->check()) {
             $productId = $request->input('product_id');
 
-            $prix = DB::table('products')
-                ->join('cart', 'cart.product_id', '=', 'products.id')
-                ->where('products.id', $productId)
-                ->value('products.prix');
-
             $cartItem = new Cart();
             $cartItem->user_id = auth()->id();
             $cartItem->product_id = $productId;
             $cartItem->image_path = $request->image_path;
-            // $cartItem->prix = $request->prix;
             $cartItem->save();
 
 
             session()->flash('success', 'Le produit a été ajouté avec succès');
-            return redirect()->back()->with('prix', $prix);
+            return redirect()->back();
         } else {
             return redirect()->route('login')->with('error', 'Vous devez être connecté pour ajouter des produits au panier.');
         }
