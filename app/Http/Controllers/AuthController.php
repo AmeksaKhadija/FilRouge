@@ -48,8 +48,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $userId = Auth::user()->id;
+            $role = $user->id_role;
             session(['user_id' => $userId]);
-
+            session(['user_role' => $role]);
             return redirect()->intended('/allproducts');
         }
 

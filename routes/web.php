@@ -40,7 +40,7 @@ Route::get('/editcategory/{id}', [CategoryController::class, 'edit_category'])->
 
 // affichage des utilisateurs et rendrent ils des admins
 Route::get('/users', [UserController::class, 'show_users'])->name('users');
-Route::post('/users/{user}/make-admin', 'UserController@makeAdmin')->name('users.make-admin');
+Route::post('/users/{user}/make-admin', [UserController::class,'makeAdmin'])->name('users.make-admin');
 
 // index __ allproduct
 Route::get('/allproducts', [ProductController::class, 'allproducts']);
@@ -56,7 +56,7 @@ Route::get('/filter', [ProductController::class, 'filter']);
 
 
 
-//  panier d'un utilisateur 
+//  panier d'un utilisateur
 Route::post('/add-to-cart', [UserController::class, 'addToCart'])->name('addToCart')->middleware('auth');
 
 Route::get('/MonPanier',[UserController::class,'showCart'])->name('mon_panier');

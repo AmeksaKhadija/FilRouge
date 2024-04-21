@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Cart;
-// use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +12,15 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function makeAdmin(User $user)
+    {
+        $userid=$user->id;
+        User::where('id', $userid)->update(['id_role' => 1]);
+
+        return redirect()->back()->with('success', 'Utilisateur promu administrateur avec succès.');
+    }
+
+
         public function show_users()
     {
         $roles=Role::all();
@@ -24,12 +32,6 @@ class UserController extends Controller
         return view('Users.index', compact('users','roles'));
     }
 
-        public function makeAdmin(User $user)
-    {
-        $user->update(['role' => 'admin']);
-
-        return redirect()->back()->with('success', 'Utilisateur promu administrateur avec succès.');
-    }
 
 
         public function showCart(Request $request)
@@ -40,12 +42,13 @@ class UserController extends Controller
                 ->join('cart', 'cart.product_id', '=', 'products.id')
                 ->where('cart.user_id', $userId)
                 ->get();
-                // dd($items);
+
         $totalItem = DB::table('cart')
                 ->join('products', 'cart.product_id', '=', 'products.id')
                 ->where('cart.user_id', $userId)
                 ->selectRaw('products.prix * cart.quantity as total_item, products.prix, cart.quantity')
                 ->get();
+
         $totalGlobal = $totalItem->sum('total_item');
 
         return view('Users.panier', compact('items','totalGlobal'));
@@ -71,7 +74,7 @@ class UserController extends Controller
     }
 
 
-    public function save(Request $request)
+        public function save(Request $request)
     {
         $product = Cart::where('product_id', $request->idProduct)->first();
         $product->quantity= $request->qte;
@@ -79,7 +82,7 @@ class UserController extends Controller
         return  redirect()->back();
     }
 
-    public function retirerProdut($id)
+        public function retirerProdut($id)
     {
         $cartItem = Cart::find($id);
 
