@@ -60,12 +60,23 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">A propos</a>
                 </li>
+                @if (session('user_id'))
+                <li class="nav-item">
+                    <a class="nav-link" href="logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="MonPanier">Mon panier</a>
+                </li>
+                @else
                 <li class="nav-item">
                     <a class="nav-link" href="login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="register">Register</a>
                 </li>
+                @endif
+
+
             </ul>
         </div>
     </header>

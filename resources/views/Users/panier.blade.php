@@ -9,37 +9,37 @@
         }
 
         .total-card {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: #F9F1E7;
-        padding: 20px;
-        border-top: 1px solid #fff;
-        box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-    }
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #F9F1E7;
+            padding: 20px;
+            border-top: 1px solid #fff;
+            box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .total-card h4 {
-        margin-bottom: 10px;
-        color: #333;
-    }
+        .total-card h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
 
-    .total-card p {
-        margin: 0;
-        font-size: 18px;
-        color: #666;
-    }
+        .total-card p {
+            margin: 0;
+            font-size: 18px;
+            color: #666;
+        }
     </style>
     <div class="container mt-5">
 
-        @foreach ($products as $product)
+        @foreach ($items as $product)
             <div class="row ">
                 <div class="image col-md-4 ">
                     <img src="{{ asset('img/' . $product->image_path) }}" alt="Product Image" class="img-fluid">
                 </div>
                 <div class="col-md-8">
                     <h5 class="custom-h5-color">Prix:</h5>
-                    <p>${{ $product->price }}</p>
+                    <p>${{ $product->prix }}</p>
                     <h5 class="custom-h5-color">Quantité:</h5>
                     <p>
                         <button class="btn btn-sm btn-secondary" onclick="decrementQuantity({{ $product->id }})">-</button>
@@ -73,7 +73,7 @@
 
     <!-- Section pour afficher le prix total -->
     <div class="total-card">
-        <h4>Total:</h4>
+        <h4>Total: {{$totalGlobal}}</h4>
         <p id="totalPrice"></p>
         <button class="buy">Buy now</button>
     </div>
@@ -101,7 +101,7 @@
 
 
 
-    {{-- <script>
+{{-- <script>
         function incrementQuantity(productId) {
             let quantityElement = document.getElementById('quantity_' + productId);
             let qteInput = document.getElementById('qte' + productId);

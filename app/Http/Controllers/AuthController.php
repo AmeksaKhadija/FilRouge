@@ -47,14 +47,19 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+            $userId = Auth::user()->id;
+            session(['user_id' => $userId]);
+
             return redirect()->intended('/allproducts');
         }
 
         return back()->with('error', 'Invalid email or password');
     }
 
+
     public function logout(){
         session()->forget('user_id');
+        // dd(session()->forget('user_id'));
         return redirect('/allproducts');
     }
 }
