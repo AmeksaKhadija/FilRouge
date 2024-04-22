@@ -49,8 +49,9 @@
         <div class="container">
             <a class="navbar-brand" href="#" style="color: #0c0c0c;"><span style="color: #854700;"
                     class="nav-brand-two">You</span>Choix</a>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Rechercher..." aria-label="Search">
+            <form class="d-flex" action="{{ route('search') }}" method="GET">
+                <input class="form-control me-2" type="search" name="search" placeholder="Rechercher..."
+                    aria-label="Search">
                 <button class="btn btn-outline-danger" type="submit"><i class="fas fa-search"></i></button>
             </form>
             <ul class="navbar-nav ms-auto">
@@ -61,19 +62,19 @@
                     <a class="nav-link" href="#">A propos</a>
                 </li>
                 @if (session('user_id'))
-                <li class="nav-item">
-                    <a class="nav-link" href="logout">Logout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="MonPanier">Mon panier</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="MonPanier">Mon panier</a>
+                    </li>
                 @else
-                <li class="nav-item">
-                    <a class="nav-link" href="login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="register">Register</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register">Register</a>
+                    </li>
                 @endif
 
 

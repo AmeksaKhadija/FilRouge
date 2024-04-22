@@ -17,7 +17,8 @@ class AuthController extends Controller
         return view('Auth.register');
     }
 
-    public function registerPost(Request $request){
+    public function registerPost(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
@@ -38,7 +39,8 @@ class AuthController extends Controller
         return view('Auth.login');
     }
 
-    public function loginpost(Request $request){
+    public function loginpost(Request $request)
+    {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -48,15 +50,19 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $userId = Auth::user()->id;
-            $role = $user->id_role;
+            $role = Auth::user()->id_role;
             session(['user_id' => $userId]);
             session(['user_role' => $role]);
-            return redirect()->intended('/allproducts');
+
+            if ($role == 1) {
+                return redirect()->intended('/products');
+            } else {
+                return redirect()->intended('/allproducts');
+            }
         }
 
         return back()->with('error', 'Invalid email or password');
     }
-
 
     public function logout(){
         session()->forget('user_id');

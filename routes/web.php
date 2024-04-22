@@ -47,20 +47,17 @@ Route::get('/allproducts', [ProductController::class, 'allproducts']);
 // details d'un produit
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
+
+//  panier d'un utilisateur
+Route::post('/add-to-cart', [UserController::class, 'addToCart'])->name('addToCart')->middleware('auth.check');
+Route::get('/MonPanier',[UserController::class,'showCart'])->name('mon_panier');
+Route::delete('/retirerProduct/{id}', [UserController::class, 'retirerProdut']);
+Route::put('/panierer',[UserController::class,'save'])->name('save.qte');
+
 // others
 Route::get('/resetwithemail/{token}', [AuthController::class, 'reset'])->name('resetwithemail');
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/loginpost', [AuthController::class, 'loginpost'])->name('loginpost');
-Route::get('/search', [ProductController::class, 'search']);
-Route::get('/filter', [ProductController::class, 'filter']);
+Route::get('/search', [ProductController::class, 'search'])->name('search');
 
-
-
-//  panier d'un utilisateur
-Route::post('/add-to-cart', [UserController::class, 'addToCart'])->name('addToCart')->middleware('auth');
-
-Route::get('/MonPanier',[UserController::class,'showCart'])->name('mon_panier');
-
-Route::delete('/retirerProduct/{id}', [UserController::class, 'retirerProdut']);
-
-Route::put('/panierer',[UserController::class,'save'])->name('save.qte');
+Route::get('/filter', [ProductController::class, 'filter'])->name('filter');
