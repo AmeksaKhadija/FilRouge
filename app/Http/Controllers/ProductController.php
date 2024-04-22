@@ -23,7 +23,7 @@ class ProductController extends Controller
 
         return view('product.product', ['produits' => $produits, 'categories' => $categories]);
     }
-    // lm'ajout des produits
+    // l'ajout des produits
     public function addProduct(Request $request)
     {
         $request->validate([
@@ -124,12 +124,13 @@ class ProductController extends Controller
     {
         $searchTerm = $request->input('search');
         $products = Product::where('name', 'like', "%{$searchTerm}%")->get();
-        return view('search', compact('products'));
+        $categories=Category::all();
+        return view('search', compact('products','categories'));
     }
 
     public function filter(Request $request)
     {
-        $selectedCategory = $request->input('category');
+        $selectedCategory = $request->input('categories');
 
         if ($selectedCategory) {
             $products = Product::where('id_categorie', $selectedCategory)->get();
