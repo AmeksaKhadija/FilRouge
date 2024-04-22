@@ -65,8 +65,7 @@ class AuthController extends Controller
     }
 
     public function logout(){
-        session()->forget('user_id');
-        // dd(session()->forget('user_id'));
+        Auth::logout();
         return redirect('/allproducts');
     }
 }

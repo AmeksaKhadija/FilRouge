@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // authentification
-Route::get('/register', [AuthController::class, 'register']);
+Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/registerpost', [AuthController::class, 'registerPost']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 
@@ -56,8 +56,9 @@ Route::put('/panierer',[UserController::class,'save'])->name('save.qte');
 
 // others
 Route::get('/resetwithemail/{token}', [AuthController::class, 'reset'])->name('resetwithemail');
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/loginpost', [AuthController::class, 'loginpost'])->name('loginpost');
-Route::get('/search', [ProductController::class, 'search'])->name('search');
 
+// search et filtrage
+Route::get('/search', [ProductController::class, 'search'])->name('search');
 Route::get('/filter', [ProductController::class, 'filter'])->name('filter');

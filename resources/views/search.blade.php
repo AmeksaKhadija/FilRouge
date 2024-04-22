@@ -127,18 +127,19 @@
     </div>
 
 
-    <div class="container d-flex flex-row grid gap-3 mb-5 w-100">
-        @foreach ($categories as $category)
-            <div>
-                <a href="#">
-                    <img src="{{ asset('img/' . $category->image_path) }}" class="d-block w-100 rounded-2 mb-3"
-                        style="height:30rem" alt="...">
-                    <p class="text-center fw-bold">{{ $category->name }}</p>
-                </a>
-            </div>
-        @endforeach
-    </div>
-
+    <form action="{{ route('filter') }}" method="GET">
+        <div class="container d-flex flex-row grid gap-3 mb-5 w-100">
+            @foreach ($categories as $category)
+                <div>
+                    <button type="submit" name="categories" value="{{ $category->id }}" class="btn">
+                        <img src="{{ asset('img/' . $category->image_path) }}" class="d-block w-100 rounded-2 mb-3"
+                            style="height:30rem" alt="...">
+                        <p class="text-center fw-bold">{{ $category->name }}</p>
+                    </button>
+                </div>
+            @endforeach
+        </div>
+    </form>
     <div class="container">
         <div class="col-md-12 mb-5">
             <h2 class="text-center mb-5">Our Products</h2>
