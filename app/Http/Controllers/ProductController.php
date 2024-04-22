@@ -13,7 +13,8 @@ class ProductController extends Controller
 
 
     // l'affichage des produits
-    public function list_products(){
+        public function list_products()
+    {
         $produits = DB::table('products')
             ->join('categories', 'products.id_categorie', '=', 'categories.id')
             ->select('products.id', 'products.image_path', 'products.name', 'products.description', 'products.prix', 'categories.name as categories_name', 'products.tags')
@@ -24,7 +25,7 @@ class ProductController extends Controller
         return view('product.product', ['produits' => $produits, 'categories' => $categories]);
     }
     // l'ajout des produits
-    public function addProduct(Request $request)
+        public function addProduct(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -98,7 +99,8 @@ class ProductController extends Controller
     }
 
     // affichage de tous les produits
-    public function allproducts(){
+        public function allproducts()
+    {
 
         $products = Product::all();
         View::composer(['index', 'layout'], function ($view) {
@@ -111,7 +113,7 @@ class ProductController extends Controller
 
 
     // detail d'un produit
-    public function show($id)
+        public function show($id)
     {
         $product = Product::find($id);
         return view('detail', compact('product'));

@@ -50,6 +50,7 @@
                         <form action="{{ route('save.qte') }}" method="post">
                             @csrf
                             @method('PUT')
+                            
                             <input type="hidden" id="qte{{ $product->id }}" value="" name="qte">
                             <input type="hidden" value="{{ $product->product_id }}" name="idProduct">
 

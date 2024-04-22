@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function makeAdmin(User $user)
+        public function makeAdmin(User $user)
     {
         $userid=$user->id;
         User::where('id', $userid)->update(['id_role' => 1]);
@@ -76,9 +76,12 @@ class UserController extends Controller
 
         public function save(Request $request)
     {
-        $product = Cart::where('product_id', $request->idProduct)->first();
+        $iduser=auth()->id();
+        $product = Cart::where('product_id', $request->idProduct)->where('user_id' , $iduser)->first();
+
         $product->quantity= $request->qte;
         $product->save();
+
         return  redirect()->back();
     }
 
