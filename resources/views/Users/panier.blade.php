@@ -29,6 +29,30 @@
             font-size: 18px;
             color: #666;
         }
+
+        .buy {
+            background-color: #B88E2F;
+            /* Couleur de fond */
+            color: #fff;
+            /* Couleur du texte */
+            border: none;
+            /* Supprimer la bordure */
+            border-radius: 4px;
+            /* Coins arrondis */
+            padding: 10px 20px;
+            /* Espacement intérieur */
+            font-size: 16px;
+            /* Taille de la police */
+            cursor: pointer;
+            /* Curseur de souris */
+            transition: background-color 0.3s ease;
+            /* Animation de transition */
+        }
+
+        .buy:hover {
+            background-color: #7a5f1f;
+            /* Couleur de fond au survol */
+        }
     </style>
     <div class="container mt-5">
 
@@ -50,7 +74,7 @@
                         <form action="{{ route('save.qte') }}" method="post">
                             @csrf
                             @method('PUT')
-                            
+
                             <input type="hidden" id="qte{{ $product->id }}" value="" name="qte">
                             <input type="hidden" value="{{ $product->product_id }}" name="idProduct">
 
@@ -73,11 +97,22 @@
     </div>
 
     <!-- Section pour afficher le prix total -->
-    <div class="total-card">
-        <h4>Total: {{$totalGlobal}}</h4>
-        <p id="totalPrice"></p>
-        <button class="buy">Buy now</button>
     </div>
+
+    <!-- Section pour afficher le prix total -->
+    <div class="total-card">
+        <h4 id="totalPrice">Total: ${{ $totalGlobal }}</h4>
+        <form action="{{ route('mollie') }}" method="post">
+            @csrf
+            <input type="hidden" name="product_name" value="{{ $product->name }}">
+            <input type="hidden" name="quantity" value="{{ $product->quantity }}">
+            <input type="hidden" name="amount" value="{{$totalGlobal}}.00">
+            <button class="buy" type="submit">Pay with Mollie</button>
+        </form>
+    </div>
+
+
+
 
     <script>
         function incrementQuantity(productId) {

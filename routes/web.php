@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommandeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,24 +24,26 @@ use Illuminate\Support\Facades\Route;
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/registerpost', [AuthController::class, 'registerPost']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/loginpost', [AuthController::class, 'loginpost'])->name('loginpost');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // crud des produits
-Route::get('/products', [ProductController::class, 'list_products'])->name('products');
-Route::get('/editproduct/{id}', [ProductController::class, 'edit_product'])->name('editproduct/{id}');
-Route::post('/updateproducts', [ProductController::class, 'update_product'])->name('updateproducts');
-Route::post('/addproducts', [ProductController::class, 'addProduct'])->name('addproducts');
-Route::get('/deleteproduct/{id}', [ProductController::class, 'delete_product'])->name('deleteproduct/{id}');
+Route::get('/products', [ProductController::class, 'list_products'])->name('products')->middleware('auth.check');
+Route::get('/editproduct/{id}', [ProductController::class, 'edit_product'])->name('editproduct/{id}')->middleware('auth.check');
+Route::post('/updateproducts', [ProductController::class, 'update_product'])->name('updateproducts')->middleware('auth.check');
+Route::post('/addproducts', [ProductController::class, 'addProduct'])->name('addproducts')->middleware('auth.check');
+Route::get('/deleteproduct/{id}', [ProductController::class, 'delete_product'])->name('deleteproduct/{id}')->middleware('auth.check');
 
 // crud des categories
-Route::get('/categories', [CategoryController::class, 'list_categories'])->name('categories');
-Route::get('/addcategory', [CategoryController::class, 'create_category'])->name('addcategory');
-Route::post('/updateCategory', [CategoryController::class, 'update_category'])->name('updateCategory');
-Route::delete('/deletecategory/{id}', [CategoryController::class, 'delete_category'])->name('deletecategory/{id}');
-Route::get('/editcategory/{id}', [CategoryController::class, 'edit_category'])->name('editcategory/{id}');
+Route::get('/categories', [CategoryController::class, 'list_categories'])->name('categories')->middleware('auth.check');
+Route::get('/addcategory', [CategoryController::class, 'create_category'])->name('addcategory')->middleware('auth.check');
+Route::post('/updateCategory', [CategoryController::class, 'update_category'])->name('updateCategory')->middleware('auth.check');
+Route::delete('/deletecategory/{id}', [CategoryController::class, 'delete_category'])->name('deletecategory/{id}')->middleware('auth.check');
+Route::get('/editcategory/{id}', [CategoryController::class, 'edit_category'])->name('editcategory/{id}')->middleware('auth.check');
 
 // affichage des utilisateurs et rendrent ils des admins
-Route::get('/users', [UserController::class, 'show_users'])->name('users');
-Route::post('/users/{user}/make-admin', [UserController::class,'makeAdmin'])->name('users.make-admin');
+Route::get('/users', [UserController::class, 'show_users'])->name('users')->middleware('auth.check');
+Route::post('/users/{user}/make-admin', [UserController::class,'makeAdmin'])->name('users.make-admin')->middleware('auth.check');
 
 // index __ allproduct
 Route::get('/allproducts', [ProductController::class, 'allproducts']);
@@ -50,14 +53,18 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.s
 
 //  panier d'un utilisateur
 Route::post('/add-to-cart', [UserController::class, 'addToCart'])->name('addToCart')->middleware('auth.check');
-Route::get('/MonPanier',[UserController::class,'showCart'])->name('mon_panier');
+Route::get('/MonPanier',[UserController::class,'showCart'])->name('mon_panier')->middleware('auth.check');
 Route::delete('/retirerProduct/{id}', [UserController::class, 'retirerProdut']);
 Route::put('/panierer',[UserController::class,'save'])->name('save.qte');
 
-// others
-Route::get('/resetwithemail/{token}', [AuthController::class, 'reset'])->name('resetwithemail');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::post('/loginpost', [AuthController::class, 'loginpost'])->name('loginpost');
+
+
+//molllie payment
+
+Route::post('mollie', [CommandeController::class, 'mollie'])->name('mollie');
+Route::get('success', [CommandeController::class, 'success'])->name('success');
+Route::get('cancel', [CommandeController::class, 'cancel'])->name('cancel');
+Route::get('/paiment', [CommandeController::class,'confirmation'])->name('confirmation')->middleware('auth.check');
 
 // search et filtrage
 Route::get('/search', [ProductController::class, 'search'])->name('search');
