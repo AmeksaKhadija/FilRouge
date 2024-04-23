@@ -84,6 +84,7 @@
 
     <div class="main">
         @yield('content')
+        @yield('Commande')
         @yield('additional_content')
         <div class="container">
             @yield('editcategory')

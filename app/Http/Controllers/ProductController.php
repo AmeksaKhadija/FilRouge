@@ -99,15 +99,12 @@ class ProductController extends Controller
     }
 
     // affichage de tous les produits
-        public function allproducts()
+    public function allProducts()
     {
-
         $products = Product::all();
-        View::composer(['index', 'layout'], function ($view) {
-        $view;
-    });
-        $categories=Category::all();
-         return view('index',compact('products','categories'));
+        $categories = Category::all();
+        
+        return view('index', compact('products', 'categories'));
     }
 
 
