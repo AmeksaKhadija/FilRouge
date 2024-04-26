@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\Commande;
@@ -20,14 +19,6 @@ class CommandeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function confirmation()
-    {
-        $Commande = Commande::all();
-        return view('Users.paiment', compact('Commande'));
-
-    }
-
-
 
     public function mollie(Request $request)
     {
@@ -74,6 +65,8 @@ class CommandeController extends Controller
             $obj->payment_status = "Completed";
             $obj->payment_method = "Mollie";
             $obj->save();
+
+            Cart::where('user_id', auth()->id())->delete();
 
             session()->forget('paymentId');
             session()->forget('quantity');

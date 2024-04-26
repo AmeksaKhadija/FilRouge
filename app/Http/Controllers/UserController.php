@@ -21,7 +21,7 @@ class UserController extends Controller
     }
 
 
-        public function show_users()
+    public function show_users()
     {
         $roles=Role::all();
         $users = User::leftJoin('roles', 'roles.id', '=', 'users.id_role')
@@ -54,11 +54,17 @@ class UserController extends Controller
         return view('Users.panier', compact('items','totalGlobal'));
     }
 
-        public function addToCart(Request $request)
+
+    public function addToCart(Request $request)
     {
         if (auth()->check()) {
             $productId = $request->input('product_id');
 
+            $existingCartItem = Cart::where('user_id', auth()->id())->where('product_id', $productId)->first();
+
+        if ($existingCartItem) {
+            return redirect()->back()->with('info', 'Ce produit est déjà dans votre carte.');
+        } else {
             $cartItem = new Cart();
             $cartItem->user_id = auth()->id();
             $cartItem->product_id = $productId;
@@ -66,11 +72,11 @@ class UserController extends Controller
             $cartItem->save();
 
 
-            session()->flash('success', 'Le produit a été ajouté avec succès');
-            return redirect()->back();
-        } else {
-            return redirect()->route('login')->with('error', 'Vous devez être connecté pour ajouter des produits au panier.');
+            return redirect()->back()->with('success', 'Le produit a été ajouté avec succès à votre carte.');
         }
+    } else {
+        return redirect()->route('login')->with('error', 'Vous devez être connecté pour ajouter des produits à la carte.');
+    }
     }
 
 
@@ -92,7 +98,7 @@ class UserController extends Controller
         if ($cartItem) {
             $cartItem->delete();
 
-            return redirect('/MonPanier');
+            return redirect('/MonPanier')->with('success', 'vous avez retirer le produit avec succèss');
         } else {
             return redirect('/MonPanier');
         }
