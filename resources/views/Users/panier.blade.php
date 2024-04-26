@@ -55,57 +55,65 @@
         }
     </style>
     <div class="container mt-5">
-        @foreach ($items as $product)
-            <div class="row ">
-                <div class="image col-md-4 ">
-                    <img src="{{ asset('img/' . $product->image_path) }}" alt="Product Image" class="img-fluid">
-                </div>
-                <div class="col-md-8">
-                    <h5 class="custom-h5-color">Prix:</h5>
-                    <p>${{ $product->prix }}</p>
-                    <h5 class="custom-h5-color">Quantité:</h5>
-                    <p>
-                        <button class="btn btn-sm btn-secondary" onclick="decrementQuantity({{ $product->id }})">-</button>
-                        <span id="quantity_{{ $product->id }}" class="test">{{ $product->quantity }}</span>
-                        <button class="btn btn-sm btn-secondary" onclick="incrementQuantity({{ $product->id }})">+</button>
-                    </p>
-                    <div class="d-flex gap-4">
-                        <form action="{{ route('save.qte') }}" method="post">
-                            @csrf
-                            @method('PUT')
-
-                            <input type="hidden" id="qte{{ $product->id }}" value="" name="qte">
-                            <input type="hidden" value="{{ $product->product_id }}" name="idProduct">
-
-                            <button type="submit" class="btn btn-sm btn-warning">save</button>
-                        </form>
-                        <form action="/retirerProduct/{{ $product->id }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
-                        </form>
+        @if ($items->isEmpty())
+            <div class="empty-cart-message">
+                <p>Votre panier est vide. Veuillez ajouter des produits à votre panier.</p>
+            </div>
+        @else
+            @foreach ($items as $product)
+                <div class="row ">
+                    <div class="image col-md-4 ">
+                        <img src="{{ asset('img/' . $product->image_path) }}" alt="Product Image" class="img-fluid">
                     </div>
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ $message }}
+                    <div class="col-md-8">
+                        <h5 class="custom-h5-color">Prix:</h5>
+                        <p>${{ $product->prix }}</p>
+                        <h5 class="custom-h5-color">Quantité:</h5>
+                        <p>
+                            <button class="btn btn-sm btn-secondary"
+                                onclick="decrementQuantity({{ $product->id }})">-</button>
+                            <span id="quantity_{{ $product->id }}" class="test">{{ $product->quantity }}</span>
+                            <button class="btn btn-sm btn-secondary"
+                                onclick="incrementQuantity({{ $product->id }})">+</button>
+                        </p>
+                        <div class="d-flex gap-4">
+                            <form action="{{ route('save.qte') }}" method="post">
+                                @csrf
+                                @method('PUT')
+
+                                <input type="hidden" id="qte{{ $product->id }}" value="" name="qte">
+                                <input type="hidden" value="{{ $product->product_id }}" name="idProduct">
+
+                                <button type="submit" class="btn btn-sm btn-warning">save</button>
+                            </form>
+                            <form action="/retirerProduct/{{ $product->id }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger"><i
+                                        class="fa-solid fa-trash"></i></button>
+                            </form>
                         </div>
-                    @endif
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ $message }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="total-card">
-                <h4 id="totalPrice">Total: ${{ $totalGlobal }}</h4>
-                <form action="{{ route('mollie') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="product_name" value="{{ $product->name }}">
-                    <input type="hidden" name="quantity" value="{{ $product->quantity }}">
-                    <input type="hidden" name="amount" value="{{$totalGlobal}}.00">
-                    <button class="buy" type="submit">Buy Now</button>
-                </form>
-            </div>
-
-        @endforeach
+                <div class="total-card">
+                    <h4 id="totalPrice">Total: ${{ $totalGlobal }}</h4>
+                    <form action="{{ route('mollie') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="product_name" value="{{ $product->name }}">
+                        <input type="hidden" name="quantity" value="{{ $product->quantity }}">
+                        <input type="hidden" name="amount" value="{{ $totalGlobal }}.00">
+                        <button class="buy" type="submit">Buy Now</button>
+                    </form>
+                </div>
+            @endforeach
+        @endif
     </div>
 
     <script>
