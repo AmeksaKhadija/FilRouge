@@ -74,7 +74,7 @@
                     <li><a href="products">Produits</a></li>
                     <li><a href="categories">Categories</a></li>
                     <li><a href="users">USERS</a></li>
-                    <li><a href="">STATISTIQUES</a></li>
+                    <li><a href="statistic">STATISTIQUES</a></li>
                 </ul>
             </aside>
 {{-- contenu --}}
@@ -170,7 +170,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="ms-3">
-                                            <img src="{{ asset($product->image_path) }}" alt="..." style="max-width: 100px; max-height: 100px;">
+                                            <img src="{{ asset('img/'.$product->image_path) }}" alt="..." style="max-width: 100px; max-height: 100px;">
                                         </div>
                                     </div>
                                 </td>

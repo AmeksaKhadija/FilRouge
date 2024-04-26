@@ -70,7 +70,7 @@
                     <li><a href="products">Produits</a></li>
                     <li><a href="categories">Categories</a></li>
                     <li><a href="users">USERS</a></li>
-                    <li><a href="">STATISTIQUES</a></li>
+                    <li><a href="statistic">STATISTIQUES</a></li>
                 </ul>
             </aside>
             {{-- contenu --}}

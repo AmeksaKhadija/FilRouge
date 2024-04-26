@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="assets/images/fav.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    {{-- <script src="./../js/login.js"></script> --}}
 
     <style>
         .input-group-append {
@@ -45,11 +45,18 @@
 </head>
 
 <body>
-    <header class="navbar navbar-expand-lg navbar-white bg-white shadow sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#" style="color: #0c0c0c;"><span style="color: #854700;"
-                    class="nav-brand-two">You</span>Choix</a>
-            <form class="d-flex" action="{{ route('search') }}" method="GET">
+   <header class="navbar navbar-expand-lg navbar-white bg-white shadow sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#" style="color: #0c0c0c;">
+            <span style="color: #854700;" class="nav-brand-two">You</span>Choix
+        </a>
+        <button class="navbar-toggler border"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <form class="d-flex ms-auto mb-2 mb-lg-0" action="{{ route('search') }}" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Rechercher..."
                     aria-label="Search">
                 <button class="btn btn-outline-danger" type="submit"><i class="fas fa-search"></i></button>
@@ -63,24 +70,21 @@
                 </li>
                 @if (auth()->user())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                    <a class="nav-link" href="{{ route('mon_panier') }}"><i class="fa-solid fa-cart-shopping"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('mon_panier') }}">Mon panier</a>
+                    <a class="nav-link" href="{{ route('logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a>
                 </li>
-            @else
+                @else
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    <a class="nav-link" href="{{ route('register') }}"><i class="fa-solid fa-right-to-bracket"></i></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">Register</a>
-                </li>
-            @endif
-
-
+                @endif
             </ul>
         </div>
-    </header>
+    </div>
+</header>
+
 
     <div class="main">
         @yield('content')
@@ -97,11 +101,10 @@
             @yield('addproduit')
         </div>
         @yield('custom-script')
-        <div class="panier-content">
-            @yield('panier')
-        </div>
-    </div>
 
+        @yield('panier')
+    </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

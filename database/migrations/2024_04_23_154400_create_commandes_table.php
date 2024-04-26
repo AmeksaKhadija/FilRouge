@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->string('payment_id');
+            $table->string('userName');
             $table->string('product_name');
             $table->string('quantity');
             $table->string('amount');
