@@ -55,7 +55,6 @@
         }
     </style>
     <div class="container mt-5">
-
         @foreach ($items as $product)
             <div class="row ">
                 <div class="image col-md-4 ">
@@ -93,26 +92,21 @@
                     @endif
                 </div>
             </div>
+
+
+            <div class="total-card">
+                <h4 id="totalPrice">Total: ${{ $totalGlobal }}</h4>
+                <form action="{{ route('mollie') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="product_name" value="{{ $product->name }}">
+                    <input type="hidden" name="quantity" value="{{ $product->quantity }}">
+                    <input type="hidden" name="amount" value="{{$totalGlobal}}.00">
+                    <button class="buy" type="submit">Buy Now</button>
+                </form>
+            </div>
+
         @endforeach
     </div>
-
-    <!-- Section pour afficher le prix total -->
-    </div>
-
-    <!-- Section pour afficher le prix total -->
-    <div class="total-card">
-        <h4 id="totalPrice">Total: ${{ $totalGlobal }}</h4>
-        <form action="{{ route('mollie') }}" method="post">
-            @csrf
-            <input type="hidden" name="product_name" value="{{ $product->name }}">
-            <input type="hidden" name="quantity" value="{{ $product->quantity }}">
-            <input type="hidden" name="amount" value="{{$totalGlobal}}.00">
-            <button class="buy" type="submit">Pay with Mollie</button>
-        </form>
-    </div>
-
-
-
 
     <script>
         function incrementQuantity(productId) {
@@ -134,40 +128,3 @@
         }
     </script>
 @endsection
-
-
-
-{{-- <script>
-        function incrementQuantity(productId) {
-            let quantityElement = document.getElementById('quantity_' + productId);
-            let qteInput = document.getElementById('qte' + productId);
-            let currentQuantity = parseInt(quantityElement.textContent);
-            quantityElement.textContent = currentQuantity + 1;
-            qteInput.value = currentQuantity + 1;
-            updateTotalPrice(); // Mettre à jour le prix total après chaque changement de quantité
-        }
-
-        function decrementQuantity(productId) {
-            let quantityElement = document.getElementById('quantity_' + productId);
-            let qteInput = document.getElementById('qte' + productId);
-            let currentQuantity = parseInt(quantityElement.textContent);
-            if (currentQuantity > 1) {
-                quantityElement.textContent = currentQuantity - 1;
-                qteInput.value = currentQuantity - 1;
-                updateTotalPrice(); // Mettre à jour le prix total après chaque changement de quantité
-            }
-        }
-
-        // Fonction pour mettre à jour le prix total en fonction des quantités actuelles des produits
-        function updateTotalPrice() {
-            let totalPrice = 0;
-            @foreach ($products as $product)
-                let quantity = parseInt(document.getElementById('quantity_{{ $product->id }}').textContent);
-                totalPrice += quantity * {{ $product->price }};
-            @endforeach
-            document.getElementById('totalPrice').textContent = '$' + totalPrice.toFixed(2);
-        }
-
-        // Appel initial pour afficher le prix total au chargement de la page
-        updateTotalPrice();
-    </script> --}}

@@ -17,6 +17,8 @@
 
         .card .image img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: .5s;
         }
 
@@ -126,7 +128,7 @@
         </div>
     </div>
 
-{{-- 
+{{--
     <div class="container d-flex flex-row grid gap-3 mb-5 w-100">
         @foreach ($categories as $category)
             <div>

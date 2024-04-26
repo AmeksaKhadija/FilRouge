@@ -21,7 +21,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|unique:users',
             'password' => 'required',
         ]);
 
@@ -29,6 +29,7 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->id_role = 2;
         $user->save();
         return redirect('/login');
     }

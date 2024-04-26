@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
@@ -90,7 +91,7 @@ class ProductController extends Controller
     }
 
     // supprission des produits
-        public function delete_product($id)
+    public function delete_product($id)
     {
         $produit = Product::find($id);
         $produit->delete();
@@ -103,20 +104,28 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $categories = Category::all();
-        
+
         return view('index', compact('products', 'categories'));
     }
 
 
 
     // detail d'un produit
-        public function show($id)
+    public function show($id)
     {
         $product = Product::find($id);
         return view('detail', compact('product'));
     }
 
-
+    // nombre des produit
+    public function countProducts()
+    {
+        $totalProducts = Product::count();
+        $totalCategories = Category::count();
+        $totalUsers = User::count();
+        // dd($totalProducts);
+        return view('statistic', compact('totalProducts','totalCategories','totalUsers'));
+    }
     // search
 
     public function search(Request $request)

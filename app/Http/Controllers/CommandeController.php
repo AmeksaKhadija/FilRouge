@@ -63,8 +63,10 @@ class CommandeController extends Controller
         //dd($payment);
         if($payment->isPaid())
         {
+
             $obj = new Commande();
             $obj->payment_id = $paymentId;
+            $obj->userName = Auth()->user()->name;
             $obj->product_name = $payment->description;
             $obj->quantity = session()->get('quantity');
             $obj->amount = $payment->amount->value;
@@ -76,7 +78,7 @@ class CommandeController extends Controller
             session()->forget('paymentId');
             session()->forget('quantity');
 
-            return redirect()->to('MonPanier');
+            return redirect()->to('MonPanier')->with('success', 'wohooo you have successfuly bought Your Product');
         } else {
             return redirect()->route('cancel');
         }
@@ -84,7 +86,9 @@ class CommandeController extends Controller
 
     public function cancel()
     {
-        echo "Payment is cancelled.";
+        // Display an error toast with no title
+            toastr()->error('Oops! Something went wrong!');
+            return redirect()->to('MonPanier');
     }
     /**
      * Show the form for creating a new resource.
