@@ -73,5 +73,4 @@ Route::get('/statistic', [ProductController::class, 'countProducts'])->name('sta
 Route::post('mollie', [CommandeController::class, 'mollie'])->name('mollie');
 Route::get('success', [CommandeController::class, 'success'])->name('success');
 Route::get('cancel', [CommandeController::class, 'cancel'])->name('cancel');
-Route::get('/paiment', [CommandeController::class,'confirmation'])->name('confirmation')->middleware('auth.check');
 
