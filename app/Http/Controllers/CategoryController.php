@@ -45,7 +45,7 @@ class CategoryController extends Controller
 
     public function update_category(Request $request)
     {
-     
+
         $request->validate([
             'name' => 'required',
             'image_path' => 'required|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
