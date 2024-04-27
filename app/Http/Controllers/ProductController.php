@@ -2,81 +2,152 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Product;
+use App\Models\category;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+
+    // l'affichage des produits
+        public function list_products()
     {
-        return Product::all();
+        $produits = DB::table('products')
+            ->join('categories', 'products.id_categorie', '=', 'categories.id')
+            ->select('products.id', 'products.image_path', 'products.name', 'products.description', 'products.prix', 'categories.name as categories_name', 'products.tags')
+            ->get();
 
+        $categories = Category::all();
+
+        return view('product.product', ['produits' => $produits, 'categories' => $categories]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    // l'ajout des produits
+        public function addProduct(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'slug'=>'required',
-            'description'=>'required',
-            'price'=>'required'
+            'name' => 'required',
+            'description' => 'required',
+            'prix' => 'required',
+            'quantity' => 'required',
+            'category_id' => 'required',
+            'tags' => 'required',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
         ]);
 
-        return Product::create($request->all());
+        $uploadDir = 'img/';
+        $uploadFileName = uniqid() . '.' . $request->file('image_path')->getClientOriginalExtension();
+        $request->file('image_path')->move($uploadDir, $uploadFileName);
+
+        $produit = new Product();
+        $produit->name = $request->name;
+        $produit->description = $request->description;
+        $produit->prix = $request->prix;
+        $produit->quantity = $request->quantity;
+        $produit->id_categorie = $request->category_id;
+        $produit->tags = $request->tags;
+        $produit->image_path = $uploadFileName;
+        $produit->save();
+
+        return redirect('/products');
+    }
+
+    // edit et update des produits
+    public function edit_product($id){
+        $product = Product::find($id);
+        $categories= Category::all();
+        return view('product.editproduct',compact('categories', 'product'));
+    }
+
+    public function update_product(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'prix' => 'required',
+            'quantity' => 'required',
+            'category_id' => 'required',
+            'tags' => 'required',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
+        ]);
+
+        $uploadDir = 'img/';
+        $uploadFileName = uniqid() . '.' . $request->file('image_path')->getClientOriginalExtension();
+        $request->file('image_path')->move($uploadDir, $uploadFileName);
+
+        $produit = Product::find($request->id);
+        $produit->name = $request->name;
+        $produit->description = $request->description;
+        $produit->prix = $request->prix;
+        $produit->quantity = $request->quantity;
+        $produit->id_categorie = $request->category_id;
+        $produit->tags = $request->tags;
+        $produit->image_path = $uploadFileName;
+        $produit->save();
+
+        return redirect('/products');
+    }
+
+    // supprission des produits
+    public function delete_product($id)
+    {
+        $produit = Product::find($id);
+        $produit->delete();
+        return redirect('/products');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // affichage de tous les produits
+    public function allProducts()
+    {
+        $products = Product::all();
+        $categories = Category::all();
+
+        return view('index', compact('products', 'categories'));
+    }
+
+
+
+    // detail d'un produit
     public function show($id)
     {
-        return Product::find($id);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
         $product = Product::find($id);
-        $product->update($request->all());
-        return $product;
+        return view('detail', compact('product'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    // nombre des produit
+    public function countProducts()
     {
-        return Product::destroy($id);
+        $totalProducts = Product::count();
+        $totalCategories = Category::count();
+        $totalUsers = User::count();
+        // dd($totalProducts);
+        return view('statistic', compact('totalProducts','totalCategories','totalUsers'));
+    }
+    // search
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $products = Product::where('name', 'like', "%{$searchTerm}%")->get();
+        $categories=Category::all();
+        return view('search', compact('products','categories'));
     }
 
-    /**
-     * search for a name.
-     *
-     * @param  string  $name
-     * @return \Illuminate\Http\Response
-     */
-}
+    public function filter(Request $request)
+    {
+        $selectedCategory = $request->input('categories');
+
+        if ($selectedCategory) {
+            $products = Product::where('id_categorie', $selectedCategory)->get();
+        } else {
+            $products = Product::all();
+        }
+
+        return view('filter', compact('products'));
+    }
+
+    }
+

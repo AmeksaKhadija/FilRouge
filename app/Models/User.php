@@ -21,8 +21,18 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'remember_token',
     ];
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function commands()
+    {
+        return $this->hasMany(Commande::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -41,4 +51,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
 }
+
+
