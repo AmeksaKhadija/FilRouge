@@ -46,7 +46,7 @@ Route::put('/panierer',[UserController::class,'save'])->name('save.qte');
 //les taches de l'admin
 
 // crud des produits
-Route::get('/products', [ProductController::class, 'list_products'])->name('products')->middleware('auth.check');
+Route::get('/products', [ProductController::class, 'list_products'])->name('products')->middleware('admin.check');
 Route::get('/editproduct/{id}', [ProductController::class, 'edit_product'])->name('editproduct/{id}')->middleware('auth.check');
 Route::post('/updateproducts', [ProductController::class, 'update_product'])->name('updateproducts')->middleware('auth.check');
 Route::post('/addproducts', [ProductController::class, 'addProduct'])->name('addproducts')->middleware('auth.check');
